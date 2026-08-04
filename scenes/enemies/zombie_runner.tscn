@@ -13,6 +13,7 @@ script = ExtResource("1_zombie")
 move_speed = 5.2
 contact_damage = 8
 max_hp = 18
+scrap_reward = 18
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

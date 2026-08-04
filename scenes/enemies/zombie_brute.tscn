@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/zombie.gd" id="1_zombie"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(1.35, 2.1, 1.35)
+
+[sub_resource type="StandardMaterial3D" id="Mat_brute"]
+albedo_color = Color(0.55, 0.12, 0.42, 1)
+
+[node name="ZombieBrute" type="Node3D" groups=["zombies"]]
+script = ExtResource("1_zombie")
+move_speed = 1.65
+contact_damage = 30
+max_hp = 200
+scrap_reward = 45
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Mat_brute")

@@ -7,9 +7,14 @@ Playable цикл: волна → победа/поражение. Desktop + deb
 - [ ] Стена с HP, урон при контакте зомби
 - [ ] 1 турель: автоатака по ближайшему врагу
 - [ ] 1 зомби: движение к стене, HP
-- [ ] Wave spawn (интервал + счётчик; 1–3 волны)
-- [ ] Win / Lose + restart
-- [ ] HUD: HP стены, волна
-- [ ] Debug APK smoke-test
+- [x] Wave spawn (интервал + счётчик; 1–5 волн + Brute) — см. `docs/stage15.md`
+- [x] Win / Lose + restart (+ MAIN MENU)
+- [x] HUD: HP стены, волна, Scrap (+ pause)
+- [x] Main menu → PLAY → battle — см. `docs/stage13.md`
+- [x] Scrap / стоимость турелей — см. `docs/stage14.md`
+- [x] Debug APK smoke-test (см. stage 8)
 
-**Вне scope:** мета, магазин, 3D, мультиплеер, монетизация, полиш.
+- [x] Sell + simple upgrade (in-run) — см. `docs/stage16.md`
+- [x] Meta progression между ранами (Stars + shop) — см. `docs/stage17.md`
+
+**Вне scope MVP slice:** мультиплеер, стор submit, IAP.

@@ -15,11 +15,13 @@
 
 4. **Возрастной рейтинг** — IARC (Play), App Store questionnaire, RuStore; зомби/насилие → ориентир **Teen / 12+**.
 
-5. **Подписание билдов** — Android release keystore (вне git); iOS certificates + provisioning (этап 10 blocked без Team ID).
+5. **Подписание билдов** — Android release keystore (вне git; prep этап 18); iOS certificates + provisioning (этап 10 blocked без Team ID).
 
 6. **Контентные/правовые** — оригинальные или лицензированные ассеты; политики RuStore/регионов по насилию.
 
-7. **Название / пакет** — сменить placeholder `com.yourstudio.zombiestronghold` перед продом; проверить коллизии имени.
+7. **Название / пакет** — сменить placeholder `com.yourstudio.zombiestronghold` **до первого Play upload** (потом нельзя легко); чеклист: [`package_id.md`](package_id.md).
+
+8. **Release AAB** — пресет **Android Release AAB** готов; нужен Gradle template + release keystore локально → Closed testing. См. [`stage18_android_aab.md`](stage18_android_aab.md).
 
 ---
 

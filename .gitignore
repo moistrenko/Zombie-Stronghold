@@ -30,3 +30,10 @@ dist/
 *.aab
 *.ipa
 *.xcframework
+
+# Android Gradle build template (Project → Install Android Build Template)
+# Regenerated locally; required for AAB — see docs/stage18_android_aab.md
+android/build/
+android/.generated/
+android/build/.gradle/
+android/build/build/

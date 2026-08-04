@@ -3,14 +3,18 @@ extends Node
 signal wave_changed(current_wave: int, total_waves: int)
 signal status_changed(text: String)
 signal waves_finished
+signal enemy_killed(scrap_amount: int)
+signal between_waves
 
-## Each wave is an array of enemy type keys ("basic", "runner").
+## Each wave is an array of enemy type keys ("basic", "runner", "brute").
 var wave_recipes: Array = [
 	["basic", "basic", "basic"],
 	["basic", "runner", "basic", "runner", "basic"],
 	["basic", "runner", "runner", "basic", "runner", "basic", "runner", "basic"],
+	["basic", "runner", "basic", "runner", "runner", "basic", "runner", "brute"],
+	["basic", "runner", "runner", "basic", "runner", "basic", "runner", "basic", "runner", "brute"],
 ]
-@export var spawn_intervals: Array[float] = [1.2, 1.0, 0.85]
+@export var spawn_intervals: Array[float] = [1.2, 1.0, 0.85, 0.8, 0.7]
 @export var pause_between_waves: float = 2.0
 @export var spawn_x_spread: float = 2.5
 
@@ -71,6 +75,7 @@ func _run_waves() -> void:
 		if wave_index < total - 1:
 			if not _active:
 				return
+			between_waves.emit()
 			status_changed.emit("Wave %d/%d — next..." % [wave_number, total])
 			await get_tree().create_timer(pause_between_waves).timeout
 
@@ -105,3 +110,9 @@ func _spawn_enemy(type_key: String) -> void:
 
 	if enemy.has_method("setup"):
 		enemy.setup(_wall)
+	if enemy.has_signal("killed"):
+		enemy.killed.connect(_on_enemy_killed)
+
+
+func _on_enemy_killed(scrap_amount: int) -> void:
+	enemy_killed.emit(scrap_amount)

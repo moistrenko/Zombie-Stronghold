@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8battle3dmain01"]
+[gd_scene load_steps=17 format=3 uid="uid://c8battle3dmain01"]
 
 [ext_resource type="Script" path="res://scripts/battle/battle.gd" id="1_battle"]
 [ext_resource type="Script" path="res://scripts/battle/wall.gd" id="2_wall"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/battle/wave_manager.gd" id="5_wave"]
 [ext_resource type="PackedScene" uid="uid://c9zombierunner3d01" path="res://scenes/enemies/zombie_runner.tscn" id="6_runner"]
 [ext_resource type="PackedScene" uid="uid://e5turretcannon3d01" path="res://scenes/units/turret_cannon.tscn" id="7_cannon"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie_brute.tscn" id="8_brute"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(24, 24)
@@ -37,8 +38,10 @@ albedo_color = Color(0.25, 0.55, 0.9, 0.28)
 script = ExtResource("1_battle")
 zombie_scene = ExtResource("3_zombie")
 zombie_runner_scene = ExtResource("6_runner")
+zombie_brute_scene = ExtResource("8_brute")
 turret_scene = ExtResource("4_turret")
 turret_cannon_scene = ExtResource("7_cannon")
+scrap_between_waves = 12
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 18, 14)
@@ -78,23 +81,31 @@ script = ExtResource("5_wave")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="HpLabel" type="Label" parent="HUD"]
+[node name="PauseButton" type="Button" parent="HUD"]
 offset_left = 16.0
 offset_top = 12.0
-offset_right = 420.0
+offset_right = 156.0
+offset_bottom = 92.0
+theme_override_font_sizes/font_size = 28
+text = "PAUSE"
+
+[node name="HpLabel" type="Label" parent="HUD"]
+offset_left = 172.0
+offset_top = 12.0
+offset_right = 520.0
 offset_bottom = 56.0
 theme_override_font_sizes/font_size = 30
 text = "Wall HP: 100 / 100"
 
 [node name="WaveLabel" type="Label" parent="HUD"]
-offset_left = 16.0
+offset_left = 172.0
 offset_top = 56.0
-offset_right = 420.0
+offset_right = 520.0
 offset_bottom = 100.0
 theme_override_font_sizes/font_size = 28
 text = "Wave 1/3"
 
-[node name="TurretsLabel" type="Label" parent="HUD"]
+[node name="ScrapLabel" type="Label" parent="HUD"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -103,7 +114,20 @@ offset_top = 12.0
 offset_right = -16.0
 offset_bottom = 56.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 32
+text = "Scrap: 100"
+horizontal_alignment = 2
+
+[node name="TurretsLabel" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -280.0
+offset_top = 56.0
+offset_right = -16.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 28
 text = "Turrets: 0/3"
 horizontal_alignment = 2
 
@@ -111,41 +135,78 @@ horizontal_alignment = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -320.0
-offset_top = 56.0
+offset_left = -340.0
+offset_top = 100.0
 offset_right = -16.0
-offset_bottom = 100.0
+offset_bottom = 144.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 26
-text = "Selected: Basic"
+text = "Selected: Basic (50)"
 horizontal_alignment = 2
 
 [node name="TypeBar" type="HBoxContainer" parent="HUD"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -280.0
-offset_top = 108.0
-offset_right = 280.0
-offset_bottom = 196.0
+offset_left = -300.0
+offset_top = 152.0
+offset_right = 300.0
+offset_bottom = 240.0
 grow_horizontal = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="BtnBasic" type="Button" parent="HUD/TypeBar"]
-custom_minimum_size = Vector2(240, 80)
+custom_minimum_size = Vector2(260, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 disabled = true
-text = "BASIC"
+text = "BASIC · 50"
 
 [node name="BtnCannon" type="Button" parent="HUD/TypeBar"]
-custom_minimum_size = Vector2(240, 80)
+custom_minimum_size = Vector2(260, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
-text = "CANNON"
+text = "CANNON · 90"
+
+[node name="ModeBar" type="HBoxContainer" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -420.0
+offset_top = -120.0
+offset_right = 420.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BtnBuild" type="Button" parent="HUD/ModeBar"]
+custom_minimum_size = Vector2(240, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+disabled = true
+text = "BUILD"
+
+[node name="BtnUpgrade" type="Button" parent="HUD/ModeBar"]
+custom_minimum_size = Vector2(240, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "UPGRADE"
+
+[node name="BtnSell" type="Button" parent="HUD/ModeBar"]
+custom_minimum_size = Vector2(240, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "SELL"
 
 [node name="ResultOverlay" type="Control" parent="HUD"]
 visible = false
@@ -174,13 +235,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -120.0
-offset_right = 200.0
-offset_bottom = 120.0
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="ResultTitle" type="Label" parent="HUD/ResultOverlay/Center"]
@@ -189,9 +250,94 @@ theme_override_font_sizes/font_size = 56
 text = "VICTORY"
 horizontal_alignment = 1
 
+[node name="StarsLabel" type="Label" parent="HUD/ResultOverlay/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
+text = "+0 Stars"
+horizontal_alignment = 1
+
 [node name="RestartButton" type="Button" parent="HUD/ResultOverlay/Center"]
-custom_minimum_size = Vector2(320, 80)
+custom_minimum_size = Vector2(360, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 34
 text = "RESTART"
+
+[node name="MenuButton" type="Button" parent="HUD/ResultOverlay/Center"]
+custom_minimum_size = Vector2(360, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 34
+text = "MAIN MENU"
+
+[node name="PauseOverlay" type="Control" parent="HUD"]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dim" type="ColorRect" parent="HUD/PauseOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.02, 0.03, 0.05, 0.78)
+
+[node name="Center" type="VBoxContainer" parent="HUD/PauseOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PauseTitle" type="Label" parent="HUD/PauseOverlay/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="HUD/PauseOverlay/Center"]
+custom_minimum_size = Vector2(360, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 34
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="HUD/PauseOverlay/Center"]
+custom_minimum_size = Vector2(360, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 34
+text = "RESTART"
+
+[node name="MenuButton" type="Button" parent="HUD/PauseOverlay/Center"]
+custom_minimum_size = Vector2(360, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 34
+text = "MAIN MENU"
+
+[node name="MuteButton" type="Button" parent="HUD/PauseOverlay/Center"]
+custom_minimum_size = Vector2(360, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "SOUND: ON"

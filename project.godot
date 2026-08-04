@@ -16,22 +16,24 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Zombie Stronghold"
 config/description="Mobile 3D tower defense — wall at screen bottom, zombies top to bottom."
-run/main_scene="res://scenes/battle/battle.tscn"
+run/main_scene="res://scenes/menus/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Sfx="*res://scripts/autoload/sfx.gd"
+MetaProgress="*res://scripts/autoload/meta_progress.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/handheld/orientation=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [input_devices]
 
-# Keep ScreenTouch and mouse paths separate so ghost press/release
-# is not double-fired by emulated mouse on Android.
 pointing/emulate_mouse_from_touch=false
 
 [rendering]
