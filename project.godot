@@ -19,21 +19,28 @@ config/description="Mobile 3D tower defense — wall at screen bottom, zombies t
 run/main_scene="res://scenes/menus/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
+; TODO(STAGE18): Android/iOS package still placeholder com.yourstudio.zombiestronghold
+; Decide final reverse-DNS BEFORE first Play upload — see docs/package_id.md
+; (Godot stores Android unique name in export_presets.cfg, not here.)
 
 [autoload]
 
 Sfx="*res://scripts/autoload/sfx.gd"
 MetaProgress="*res://scripts/autoload/meta_progress.gd"
+DifficultySettings="*res://scripts/autoload/difficulty_settings.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/handheld/orientation=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [input_devices]
 
+; Keep ScreenTouch and mouse paths separate so ghost press/release
+; is not double-fired by emulated mouse on Android.
 pointing/emulate_mouse_from_touch=false
 
 [rendering]

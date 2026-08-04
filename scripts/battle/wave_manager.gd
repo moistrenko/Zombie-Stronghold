@@ -101,6 +101,8 @@ func _spawn_enemy(type_key: String) -> void:
 		return
 
 	var enemy: Node3D = scene.instantiate()
+	# Apply difficulty before add_child so zombie._ready uses scaled max_hp.
+	_apply_difficulty_stats(enemy)
 	_spawn_parent.add_child(enemy)
 
 	var offset_x := randf_range(-spawn_x_spread, spawn_x_spread)
@@ -112,6 +114,23 @@ func _spawn_enemy(type_key: String) -> void:
 		enemy.setup(_wall)
 	if enemy.has_signal("killed"):
 		enemy.killed.connect(_on_enemy_killed)
+
+
+func _apply_difficulty_stats(enemy: Node3D) -> void:
+	if DifficultySettings == null:
+		return
+	var hp_m := DifficultySettings.get_enemy_hp_mult()
+	var spd_m := DifficultySettings.get_enemy_speed_mult()
+	var dmg_m := DifficultySettings.get_contact_dmg_mult()
+	var scrap_m := DifficultySettings.get_scrap_reward_mult()
+	if "max_hp" in enemy:
+		enemy.set("max_hp", maxi(1, int(round(float(enemy.get("max_hp")) * hp_m))))
+	if "move_speed" in enemy:
+		enemy.set("move_speed", maxf(0.1, float(enemy.get("move_speed")) * spd_m))
+	if "contact_damage" in enemy:
+		enemy.set("contact_damage", maxi(1, int(round(float(enemy.get("contact_damage")) * dmg_m))))
+	if "scrap_reward" in enemy:
+		enemy.set("scrap_reward", maxi(1, int(round(float(enemy.get("scrap_reward")) * scrap_m))))
 
 
 func _on_enemy_killed(scrap_amount: int) -> void:

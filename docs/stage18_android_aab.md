@@ -143,9 +143,16 @@ export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$PATH"
 
-# После Install Android Build Template + заполненного release keystore:
+# Release keystore via env (не коммитить значения):
+export GODOT_ANDROID_KEYSTORE_RELEASE_PATH="$HOME/godot-keys/zombie_stronghold_release.keystore"
+export GODOT_ANDROID_KEYSTORE_RELEASE_USER="zombie_stronghold"
+export GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD='REPLACE_ME'
+
 mkdir -p builds/android
+# --install-android-build-template ставит android/build/ при необходимости
+# (в репо держим только android/.build_version = 4.7.1.stable)
 "/Applications/Godot.app/Contents/MacOS/Godot" --headless --path . \
+  --install-android-build-template \
   --export-release "Android Release AAB" \
   builds/android/zombie_stronghold_release.aab
 ```
@@ -168,8 +175,14 @@ Debug APK по-прежнему:
 | Поле | Значение |
 |------|----------|
 | Цель | `builds/android/zombie_stronghold_release.aab` |
-| Статус | *(заполняется при прогоне)* |
-| Блокер | *(если есть)* |
+| Статус | **SUCCESS** (~25 MB), локально, gitignored |
+| Подпись | Локальный probe-keystore `builds/keystore/zombie_stronghold_release.keystore` (не в git; только для проверки пайплайна) |
+| CLI | `--install-android-build-template --export-release "Android Release AAB"` |
+| Блокер | Нет для локального AAB. Перед Play: финальный package ID + боевой keystore вне репо + Closed testing |
+
+SDK на машине этапа: JDK 17, build-tools 35.0.1, platforms android-35, cmake 3.10.2. NDK не потребовался для этого Gradle AAB (шаблон с prebuilt libs).
+
+Hygiene: Android presets `exclude_filter="builds/*"` + tracked `builds/.gdignore` — локальные smoke-скрины/APK не должны попадать в AAB.
 
 Не публиковать в Play из этого этапа.
 

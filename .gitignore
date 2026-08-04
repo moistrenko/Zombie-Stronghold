@@ -23,17 +23,18 @@ Thumbs.db
 # Uncomment if you do not commit .import files:
 # *.import
 
-# Builds
-builds/
+# Builds artifacts; keep builds/.gdignore tracked so Godot skips the folder
+builds/*
+!builds/.gdignore
 dist/
 *.apk
 *.aab
 *.ipa
 *.xcframework
 
-# Android Gradle build template (Project → Install Android Build Template)
-# Regenerated locally; required for AAB — see docs/stage18_android_aab.md
+# Android Gradle build template (Project → Install Android Build Template
+# or: godot --install-android-build-template). Heavy; regenerate locally.
+# Keep android/.build_version tracked (Godot version pin for AAB).
+# See docs/stage18_android_aab.md
 android/build/
 android/.generated/
-android/build/.gradle/
-android/build/build/

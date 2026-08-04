@@ -35,6 +35,7 @@ const SELL_REFUND_RATIO := 0.55
 @onready var spawn_point: Marker3D = $SpawnPoint
 @onready var hp_label: Label = $HUD/HpLabel
 @onready var wave_label: Label = $HUD/WaveLabel
+@onready var difficulty_label: Label = $HUD/DifficultyLabel
 @onready var scrap_label: Label = $HUD/ScrapLabel
 @onready var turrets_label: Label = $HUD/TurretsLabel
 @onready var selected_label: Label = $HUD/SelectedLabel
@@ -51,6 +52,7 @@ const SELL_REFUND_RATIO := 0.55
 @onready var result_menu_button: Button = $HUD/ResultOverlay/Center/MenuButton
 @onready var pause_button: Button = $HUD/PauseButton
 @onready var pause_overlay: Control = $HUD/PauseOverlay
+@onready var pause_diff_label: Label = $HUD/PauseOverlay/Center/DifficultyLabel
 @onready var resume_button: Button = $HUD/PauseOverlay/Center/ResumeButton
 @onready var pause_restart_button: Button = $HUD/PauseOverlay/Center/RestartButton
 @onready var pause_menu_button: Button = $HUD/PauseOverlay/Center/MenuButton
@@ -87,6 +89,7 @@ func _ready() -> void:
 	_turrets_label_base_modulate = turrets_label.modulate
 	_scrap_label_base_modulate = scrap_label.modulate
 	_apply_meta_bonuses()
+	_apply_difficulty_bonuses()
 	_scrap = start_scrap
 	result_overlay.visible = false
 	pause_overlay.visible = false
@@ -103,6 +106,7 @@ func _ready() -> void:
 	btn_mode_build.pressed.connect(_on_mode_build)
 	btn_mode_upgrade.pressed.connect(_on_mode_upgrade)
 	btn_mode_sell.pressed.connect(_on_mode_sell)
+	_refresh_difficulty_labels()
 	_refresh_pause_mute_label()
 	_setup_ghost()
 	_refresh_mode_ui()
@@ -657,6 +661,23 @@ func _apply_meta_bonuses() -> void:
 		wall.apply_max_hp_bonus(MetaProgress.get_wall_hp_bonus())
 
 
+func _apply_difficulty_bonuses() -> void:
+	# Easy start-scrap bonus stacks after meta. Enemy stats applied at spawn.
+	if DifficultySettings == null:
+		return
+	start_scrap += DifficultySettings.get_start_scrap_bonus()
+
+
+func _refresh_difficulty_labels() -> void:
+	var name := "Normal"
+	if DifficultySettings:
+		name = DifficultySettings.label()
+	if difficulty_label:
+		difficulty_label.text = "Diff: %s" % name
+	if pause_diff_label:
+		pause_diff_label.text = "Difficulty: %s" % name
+
+
 func _apply_meta_damage_to_turret(turret: Node3D) -> void:
 	if _turret_damage_mult <= 1.0001:
 		return
@@ -676,6 +697,8 @@ func _award_run_stars(is_win: bool) -> int:
 		earned = MetaProgress.calc_victory_stars(ratio)
 	else:
 		earned = MetaProgress.calc_defeat_stars(maxi(1, _current_wave))
+	if DifficultySettings:
+		earned = DifficultySettings.scale_stars(earned, is_win)
 	MetaProgress.add_stars(earned)
 	return earned
 

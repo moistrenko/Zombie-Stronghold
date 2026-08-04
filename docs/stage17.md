@@ -76,7 +76,7 @@ Headless smoke:
 
 ## Долги
 
-- Нет difficulty select / endless.
+- ~~Нет difficulty select~~ → сделано в stage 19. Endless ещё нет.
 - Meta балансировка не прогнана длинным playtest.
 - Нет confirm на Reset Meta (осознанно для быстрых тестов).
 - Turret dmg meta применяется на place; in-run upgrade множит уже бафнутый base (OK для light meta).

@@ -43,12 +43,13 @@ Zombie-Stronghold/
 - [x] 3 типа зомби (basic + runner + brute mini-boss) к стене, HP
 - [x] Спавн волн 1–5 (микс с волны 2; Brute на 4–5)
 - [x] Победа / поражение UI (+ MAIN MENU)
-- [x] HUD (HP + волна X/5 + Scrap + слоты + BUILD/UPGRADE/SELL + type select + pause)
+- [x] HUD (HP + волна X/5 + Scrap + Diff + слоты + BUILD/UPGRADE/SELL + type select + pause)
 - [x] Main menu + pause overlay — см. `docs/stage13.md`
 - [x] Scrap economy (стоимость турелей + награды за киллы) — см. `docs/stage14.md`
 - [x] 5 волн + мини-босс Brute — см. `docs/stage15.md`
 - [x] Sell + 1-level upgrade (режимы BUILD/UPGRADE/SELL) — см. `docs/stage16.md`
 - [x] Meta progression (Stars + shop + persist) — см. `docs/stage17.md`
+- [x] Difficulty select (Easy / Normal / Hard + persist) — см. `docs/stage19.md`
 - [x] Debug APK собран; Android smoke **PASS** (владелец) — см. `docs/stage8.md`
 - [x] Android **Release AAB** preset + prep docs — см. `docs/stage18_android_aab.md`
 - [ ] Package ID placeholder — сменить до первого Play upload — см. `docs/package_id.md`
@@ -85,4 +86,5 @@ Zombie-Stronghold/
 - **Этап 16** — sell (55% refund) + 1-level upgrade + режимы BUILD/UPGRADE/SELL. См. `docs/stage16.md`.
 - **Этап 17** — meta Stars + Meta Shop (4 permanent upgrades) + `user://` persist. См. `docs/stage17.md`.
 - **Этап 18** — Android release AAB preset + keystore/version/package hygiene. См. `docs/stage18_android_aab.md`, `docs/package_id.md`.
+- **Этап 19** — difficulty Easy/Normal/Hard + persist + spawn multipliers. См. `docs/stage19.md`.
 - Старый `docs/stage3.md` (2D турель) — устарел.

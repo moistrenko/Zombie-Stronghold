@@ -50,13 +50,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -280.0
-offset_right = 280.0
-offset_bottom = 280.0
+offset_left = -300.0
+offset_top = -340.0
+offset_right = 300.0
+offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 14
 alignment = 1
 
 [node name="Title" type="Label" parent="Center"]
@@ -72,8 +72,43 @@ theme_override_colors/font_color = Color(0.75, 0.78, 0.72, 1)
 text = "Hold the wall. Survive the waves."
 horizontal_alignment = 1
 
+[node name="DiffLabel" type="Label" parent="Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.7, 0.74, 0.68, 1)
+text = "Difficulty"
+horizontal_alignment = 1
+
+[node name="DiffBar" type="HBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnEasy" type="Button" parent="Center/DiffBar"]
+custom_minimum_size = Vector2(160, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+text = "EASY"
+
+[node name="BtnNormal" type="Button" parent="Center/DiffBar"]
+custom_minimum_size = Vector2(160, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+disabled = true
+text = "NORMAL"
+
+[node name="BtnHard" type="Button" parent="Center/DiffBar"]
+custom_minimum_size = Vector2(160, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+text = "HARD"
+
 [node name="Spacer" type="Control" parent="Center"]
-custom_minimum_size = Vector2(0, 8)
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 
 [node name="PlayButton" type="Button" parent="Center"]
@@ -137,9 +172,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -360.0
-offset_top = -260.0
+offset_top = -290.0
 offset_right = 360.0
-offset_bottom = 260.0
+offset_bottom = 290.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -167,11 +202,12 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 22
-text = "• Earn Scrap from kills; place turrets (max 3, or 4 with meta).
+text = "• Pick Easy / Normal / Hard on the menu (saved for next launch).
+• Earn Scrap from kills; place turrets (max 3, or 4 with meta).
 • BUILD / UPGRADE / SELL modes on the battle HUD.
 • Survive 5 waves (Brute on 4–5) to win.
 • Earn Stars on win/lose; spend them in META SHOP.
-• Reset Meta in the shop clears Stars + upgrades (user://)."
+• Reset Meta in the shop clears Stars + upgrades (not difficulty)."
 autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="HowToOverlay/Panel/VBox"]

@@ -1,6 +1,6 @@
 extends Control
 
-## Touch-friendly main menu: PLAY → battle, meta shop, How to play.
+## Touch-friendly main menu: difficulty select → PLAY → battle, meta shop, How to play.
 
 const BATTLE_SCENE := "res://scenes/battle/battle.tscn"
 
@@ -15,6 +15,9 @@ const BATTLE_SCENE := "res://scenes/battle/battle.tscn"
 @onready var shop_stars_label: Label = $ShopOverlay/Panel/VBox/ShopStars
 @onready var shop_close: Button = $ShopOverlay/Panel/VBox/CloseButton
 @onready var reset_meta_button: Button = $ShopOverlay/Panel/VBox/ResetButton
+@onready var btn_easy: Button = $Center/DiffBar/BtnEasy
+@onready var btn_normal: Button = $Center/DiffBar/BtnNormal
+@onready var btn_hard: Button = $Center/DiffBar/BtnHard
 
 var _upgrade_buttons: Dictionary = {}
 
@@ -29,11 +32,17 @@ func _ready() -> void:
 	shop_close.pressed.connect(_on_shop_close)
 	reset_meta_button.pressed.connect(_on_reset_meta)
 	mute_button.pressed.connect(_on_mute_pressed)
+	btn_easy.pressed.connect(_on_diff_pressed.bind(DifficultySettings.Difficulty.EASY))
+	btn_normal.pressed.connect(_on_diff_pressed.bind(DifficultySettings.Difficulty.NORMAL))
+	btn_hard.pressed.connect(_on_diff_pressed.bind(DifficultySettings.Difficulty.HARD))
 	_bind_upgrade_buttons()
 	if MetaProgress:
 		MetaProgress.changed.connect(_refresh_meta_ui)
+	if DifficultySettings:
+		DifficultySettings.changed.connect(_refresh_diff_ui)
 	_refresh_mute_label()
 	_refresh_meta_ui()
+	_refresh_diff_ui()
 
 
 func _bind_upgrade_buttons() -> void:
@@ -48,6 +57,13 @@ func _bind_upgrade_buttons() -> void:
 
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file(BATTLE_SCENE)
+
+
+func _on_diff_pressed(diff: DifficultySettings.Difficulty) -> void:
+	if DifficultySettings == null:
+		return
+	DifficultySettings.set_difficulty(diff)
+	_refresh_diff_ui()
 
 
 func _on_shop_pressed() -> void:
@@ -97,6 +113,15 @@ func _on_reset_meta() -> void:
 func _refresh_mute_label() -> void:
 	var muted := Sfx != null and Sfx.is_muted()
 	mute_button.text = "SOUND: OFF" if muted else "SOUND: ON"
+
+
+func _refresh_diff_ui() -> void:
+	var current := DifficultySettings.Difficulty.NORMAL
+	if DifficultySettings:
+		current = DifficultySettings.current
+	btn_easy.disabled = current == DifficultySettings.Difficulty.EASY
+	btn_normal.disabled = current == DifficultySettings.Difficulty.NORMAL
+	btn_hard.disabled = current == DifficultySettings.Difficulty.HARD
 
 
 func _refresh_meta_ui() -> void:
