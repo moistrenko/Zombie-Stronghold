@@ -1,0 +1,14 @@
+Zombie Stronghold is a mobile 3D tower defense game.
+
+Zombies march from the top of the screen toward your fortress wall. Place up to three turrets in the strip near the wall, survive the waves, and keep the wall standing.
+
+MVP features:
+• Top-down view with a light camera tilt
+• Tap-to-place turrets with a ghost preview
+• Multiple enemy waves plus victory/defeat screens
+• Touch controls, landscape orientation
+
+The game is in active development. Feedback is welcome.
+
+Privacy policy: [URL_PRIVACY_POLICY]
+Publisher: [STUDIO_NAME]

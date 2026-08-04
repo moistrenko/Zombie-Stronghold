@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7zombie3dplaceholder01"]
+
+[ext_resource type="Script" path="res://scripts/enemies/zombie.gd" id="1_zombie"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.8, 1.4, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Mat_zombie"]
+albedo_color = Color(0.35, 0.7, 0.32, 1)
+
+[node name="Zombie" type="Node3D" groups=["zombies"]]
+script = ExtResource("1_zombie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Mat_zombie")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4turret3d01"]
+
+[ext_resource type="Script" path="res://scripts/units/turret.gd" id="1_turret"]
+[ext_resource type="PackedScene" uid="uid://c3projectile3d01" path="res://scenes/units/projectile.tscn" id="2_projectile"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(1.0, 1.2, 1.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_turret"]
+albedo_color = Color(0.35, 0.55, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_barrel"]
+size = Vector3(0.25, 0.25, 0.9)
+
+[node name="Turret" type="Node3D"]
+script = ExtResource("1_turret")
+damage = 15
+projectile_scene = ExtResource("2_projectile")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Mat_turret")
+
+[node name="Barrel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -0.55)
+mesh = SubResource("BoxMesh_barrel")
+surface_material_override/0 = SubResource("Mat_turret")

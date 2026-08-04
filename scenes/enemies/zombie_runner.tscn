@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c9zombierunner3d01"]
+
+[ext_resource type="Script" path="res://scripts/enemies/zombie.gd" id="1_zombie"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.55, 1.0, 0.55)
+
+[sub_resource type="StandardMaterial3D" id="Mat_runner"]
+albedo_color = Color(0.92, 0.55, 0.12, 1)
+
+[node name="ZombieRunner" type="Node3D" groups=["zombies"]]
+script = ExtResource("1_zombie")
+move_speed = 5.2
+contact_damage = 8
+max_hp = 18
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Mat_runner")
