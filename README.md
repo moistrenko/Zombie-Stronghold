@@ -2,6 +2,8 @@
 
 Мобильный **3D** tower defense: защита стены крепости от волн зомби.
 
+**Portrait-first:** viewport **720×1280**, `window/handheld/orientation=1` (portrait). Телефон держим вертикально — landscape не требуется. См. `docs/stage21.md`.
+
 ## Стек (зафиксировано)
 
 **Godot 4.x + GDScript + 3D** (top-down / лёгкий наклон)
@@ -43,13 +45,20 @@ Zombie-Stronghold/
 - [x] 3 типа зомби (basic + runner + brute mini-boss) к стене, HP
 - [x] Спавн волн 1–5 (микс с волны 2; Brute на 4–5)
 - [x] Победа / поражение UI (+ MAIN MENU)
-- [x] HUD (HP + волна X/5 + Scrap + Diff + слоты + BUILD/UPGRADE/SELL + type select + pause)
+- [x] HUD (HP + Wave N + Scrap + Units + bottom build bar + unit inspector + abilities + pause)
 - [x] Main menu + pause overlay — см. `docs/stage13.md`
 - [x] Scrap economy (стоимость турелей + награды за киллы) — см. `docs/stage14.md`
 - [x] 5 волн + мини-босс Brute — см. `docs/stage15.md`
-- [x] Sell + 1-level upgrade (режимы BUILD/UPGRADE/SELL) — см. `docs/stage16.md`
+- [x] Sell + 1-level upgrade (inspector UX; modes removed in stage 27) — см. `docs/stage16.md`, `docs/stage27.md`
 - [x] Meta progression (Stars + shop + persist) — см. `docs/stage17.md`
-- [x] Difficulty select (Easy / Normal / Hard + persist) — см. `docs/stage19.md`
+- [x] ~~Difficulty select~~ removed in stage 27 (always Normal baseline) — см. `docs/stage19.md`, `docs/stage27.md`
+- [x] Art/anims + apocalypse battlefield (sprites, props, sky) — см. `docs/stage20.md`
+- [x] Chroma-green art reprocess + Endless after wave 5 + portrait 720×1280 — см. `docs/stage21.md`
+- [x] Active abilities (Repair / Slow) + smoother 8/6-frame anims — см. `docs/stage22.md`
+- [x] Infinite waves + uncapped placement + Support/Tesla/Sniper/Mine/Fence — см. `docs/stage24.md`
+- [x] Battlefield backdrop polish (large wrecks, skyline, fog mood) — см. `docs/stage25.md`
+- [x] Fortress wall + on-wall placement + gate attack (1 HP/hit) + slow zombies — см. `docs/stage26.md`
+- [x] Apocalyptic main menu backdrop (layered bg + chroma plates + idle motion) — см. `docs/stage28.md`
 - [x] Debug APK собран; Android smoke **PASS** (владелец) — см. `docs/stage8.md`
 - [x] Android **Release AAB** preset + prep docs — см. `docs/stage18_android_aab.md`
 - [ ] Package ID placeholder — сменить до первого Play upload — см. `docs/package_id.md`
@@ -87,4 +96,13 @@ Zombie-Stronghold/
 - **Этап 17** — meta Stars + Meta Shop (4 permanent upgrades) + `user://` persist. См. `docs/stage17.md`.
 - **Этап 18** — Android release AAB preset + keystore/version/package hygiene. См. `docs/stage18_android_aab.md`, `docs/package_id.md`.
 - **Этап 19** — difficulty Easy/Normal/Hard + persist + spawn multipliers. См. `docs/stage19.md`.
+- **Этап 20** — generated art integration: zombie/turret AnimatedSprite3D, processed alpha, apocalypse battlefield. См. `docs/stage20.md`.
+- **Этап 21** — chroma green key + Endless mode + portrait-first (720×1280). См. `docs/stage21.md`.
+- **Этап 22** — active abilities (Repair/Slow) + smoother 8/6-frame anims. См. `docs/stage22.md`.
+- **Этап 23** — folded into 24 (Support unit shipped with expanded defenses).
+- **Этап 24** — infinite waves, uncapped placement, Support/Tesla/Sniper/Mine/Fence, meta Build Cost −10%. См. `docs/stage24.md`.
+- **Этап 25** — battlefield backdrop polish: v3 art, hero-scale cars/truck, distant skyline, warmer fog lighting. См. `docs/stage25.md`.
+- **Этап 26** — fortress wall/gate sprites, on-wall turret placement, gate attack loop (1 HP/hit), slow shuffle speeds. См. `docs/stage26.md`.
+- **Этап 27** — bottom build bar + type info + unit inspector (sell/upgrade); remove BUILD/UPGRADE/SELL modes; remove difficulty select. См. `docs/stage27.md`.
+- **Этап 28** — apocalyptic main menu background (full-bleed + zombies/cars layers + idle sway). См. `docs/stage28.md`.
 - Старый `docs/stage3.md` (2D турель) — устарел.

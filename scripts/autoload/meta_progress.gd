@@ -8,19 +8,26 @@ const SECTION := "meta"
 
 signal changed
 
-## Victory: base + bonus from remaining wall HP ratio (0..1).
+## Retire with wall alive: base + bonus from remaining wall HP ratio (0..1).
 const VICTORY_BASE := 15
 const VICTORY_HP_BONUS_MAX := 10
-## Defeat: consolation per wave reached (wave that was active when wall fell).
+## Defeat / retire: Stars per wave reached.
 const DEFEAT_PER_WAVE := 3
+## Extra Stars per wave beyond 5 (long-run reward).
+const ENDLESS_EXTRA_PER_WAVE := 2
+## Build-cost discount per level (replaces obsolete +1 max turrets).
+const BUILD_DISCOUNT_PER_LEVEL := 0.10
 
-enum UpgradeId { START_SCRAP, WALL_HP, TURRET_DMG, MAX_TURRETS }
+enum UpgradeId { START_SCRAP, WALL_HP, TURRET_DMG, MAX_TURRETS, ABILITY_CD }
 
 ## Per-level effect values.
 const START_SCRAP_PER_LEVEL := 25
 const WALL_HP_PER_LEVEL := 20
 const TURRET_DMG_PER_LEVEL := 0.05
+## Legacy enum name MAX_TURRETS → Build Cost −10% (save key unchanged).
 const MAX_TURRETS_PER_LEVEL := 1
+## Ability cooldown reduction per level (0.15 = −15%).
+const ABILITY_CD_PER_LEVEL := 0.15
 
 ## Caps (inclusive max level).
 const CAPS := {
@@ -28,6 +35,7 @@ const CAPS := {
 	UpgradeId.WALL_HP: 5,
 	UpgradeId.TURRET_DMG: 5,
 	UpgradeId.MAX_TURRETS: 1,
+	UpgradeId.ABILITY_CD: 2,
 }
 
 ## Cost tables indexed by current level → cost to buy next.
@@ -36,13 +44,15 @@ const COSTS := {
 	UpgradeId.WALL_HP: [8, 12, 18, 25, 35],
 	UpgradeId.TURRET_DMG: [10, 15, 22, 30, 40],
 	UpgradeId.MAX_TURRETS: [40],
+	UpgradeId.ABILITY_CD: [15, 25],
 }
 
 const LABELS := {
 	UpgradeId.START_SCRAP: "Starting Scrap +25",
 	UpgradeId.WALL_HP: "Wall Max HP +20",
 	UpgradeId.TURRET_DMG: "Turret Damage +5%",
-	UpgradeId.MAX_TURRETS: "+1 Max Turrets",
+	UpgradeId.MAX_TURRETS: "Build Cost −10%",
+	UpgradeId.ABILITY_CD: "Ability CD −15%",
 }
 
 var stars: int = 0
@@ -51,6 +61,7 @@ var levels: Dictionary = {
 	UpgradeId.WALL_HP: 0,
 	UpgradeId.TURRET_DMG: 0,
 	UpgradeId.MAX_TURRETS: 0,
+	UpgradeId.ABILITY_CD: 0,
 }
 
 
@@ -101,6 +112,14 @@ func calc_victory_stars(hp_ratio: float) -> int:
 
 func calc_defeat_stars(waves_reached: int) -> int:
 	return maxi(0, waves_reached) * DEFEAT_PER_WAVE
+
+
+func calc_endless_defeat_stars(waves_reached: int) -> int:
+	## Defeat in endless: 3×wave + 2×max(0, wave−5). Difficulty mult applied by caller.
+	var w := maxi(0, waves_reached)
+	var base := w * DEFEAT_PER_WAVE
+	var endless_extra := maxi(0, w - 5) * ENDLESS_EXTRA_PER_WAVE
+	return base + endless_extra
 
 
 func get_level(id: UpgradeId) -> int:
@@ -154,7 +173,25 @@ func get_turret_damage_mult() -> float:
 
 
 func get_max_turrets_bonus() -> int:
-	return get_level(UpgradeId.MAX_TURRETS) * MAX_TURRETS_PER_LEVEL
+	## Obsolete (unlimited placement). Kept for API compat; always 0 effect.
+	return 0
+
+
+## Place-cost multiplier (1.0 = full price, 0.9 at Build Cost −10%).
+func get_build_cost_mult() -> float:
+	var discount := float(get_level(UpgradeId.MAX_TURRETS)) * BUILD_DISCOUNT_PER_LEVEL
+	return maxf(0.5, 1.0 - discount)
+
+
+## Returns cooldown multiplier (1.0 = full CD, 0.7 = −30% at max).
+func get_ability_cd_mult() -> float:
+	var reduction := float(get_level(UpgradeId.ABILITY_CD)) * ABILITY_CD_PER_LEVEL
+	return maxf(0.5, 1.0 - reduction)
+
+
+## Unified run payout (defeat or retire). Long runs get extra after wave 5.
+func calc_run_stars(waves_reached: int) -> int:
+	return calc_endless_defeat_stars(waves_reached)
 
 
 func label_for(id: UpgradeId) -> String:
@@ -171,7 +208,9 @@ func effect_summary(id: UpgradeId) -> String:
 		UpgradeId.TURRET_DMG:
 			return "+%d%% dmg" % int(round(float(lvl) * TURRET_DMG_PER_LEVEL * 100.0))
 		UpgradeId.MAX_TURRETS:
-			return "+%d slot" % (lvl * MAX_TURRETS_PER_LEVEL)
+			return "−%d%% cost" % int(round(float(lvl) * BUILD_DISCOUNT_PER_LEVEL * 100.0))
+		UpgradeId.ABILITY_CD:
+			return "−%d%% CD" % int(round(float(lvl) * ABILITY_CD_PER_LEVEL * 100.0))
 	return ""
 
 
@@ -185,4 +224,6 @@ func _level_key(id: UpgradeId) -> String:
 			return "lvl_turret_dmg"
 		UpgradeId.MAX_TURRETS:
 			return "lvl_max_turrets"
+		UpgradeId.ABILITY_CD:
+			return "lvl_ability_cd"
 	return "lvl_unknown"

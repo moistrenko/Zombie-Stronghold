@@ -1,17 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7zombie3dplaceholder01"]
+[gd_scene load_steps=3 format=3 uid="uid://b7zombie3dplaceholder01"]
 
 [ext_resource type="Script" path="res://scripts/enemies/zombie.gd" id="1_zombie"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_body"]
-size = Vector3(0.8, 1.4, 0.8)
-
-[sub_resource type="StandardMaterial3D" id="Mat_zombie"]
-albedo_color = Color(0.35, 0.7, 0.32, 1)
+[ext_resource type="SpriteFrames" path="res://resources/sprites/zombie_basic_frames.tres" id="2_frames"]
 
 [node name="Zombie" type="Node3D" groups=["zombies"]]
 script = ExtResource("1_zombie")
+move_speed = 1.1
+contact_damage = 1
+gate_hit_damage = 1
+attack_interval = 1.0
+max_hp = 30
+scrap_reward = 12
+move_animation = &"run"
+attack_animation = &"attack"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
-mesh = SubResource("BoxMesh_body")
-surface_material_override/0 = SubResource("Mat_zombie")
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+pixel_size = 0.005
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+sprite_frames = ExtResource("2_frames")
+animation = &"run"
+autoplay = "run"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8battle3dmain01"]
+[gd_scene load_steps=37 format=3 uid="uid://c8battle3dmain01"]
 
 [ext_resource type="Script" path="res://scripts/battle/battle.gd" id="1_battle"]
 [ext_resource type="Script" path="res://scripts/battle/wall.gd" id="2_wall"]
@@ -8,18 +8,38 @@
 [ext_resource type="PackedScene" uid="uid://c9zombierunner3d01" path="res://scenes/enemies/zombie_runner.tscn" id="6_runner"]
 [ext_resource type="PackedScene" uid="uid://e5turretcannon3d01" path="res://scenes/units/turret_cannon.tscn" id="7_cannon"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/zombie_brute.tscn" id="8_brute"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/ground_asphalt_apocalypse.png" id="9_ground"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/sky_apocalypse.png" id="10_sky"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/prop_car_overturned_burning.png" id="11_car"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/prop_truck_side_wreck.png" id="12_truck"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/prop_burning_debris.png" id="13_debris"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/prop_ruins_barrier.png" id="14_barrier"]
+[ext_resource type="PackedScene" uid="uid://f6supportbeacon01" path="res://scenes/units/support.tscn" id="15_support"]
+[ext_resource type="PackedScene" uid="uid://g7turrettesla3d01" path="res://scenes/units/turret_tesla.tscn" id="16_tesla"]
+[ext_resource type="PackedScene" uid="uid://h8turretsniper3d01" path="res://scenes/units/turret_sniper.tscn" id="17_sniper"]
+[ext_resource type="PackedScene" uid="uid://i9mineprox01" path="res://scenes/units/mine.tscn" id="18_mine"]
+[ext_resource type="PackedScene" uid="uid://j0barricadefence01" path="res://scenes/units/barricade.tscn" id="19_fence"]
+[ext_resource type="Texture2D" path="res://assets/art/environment/processed/prop_ruins_skyline.png" id="20_skyline"]
+[ext_resource type="Script" path="res://scripts/battle/prop_fire_flicker.gd" id="21_flicker"]
+[ext_resource type="PackedScene" uid="uid://k1buildbarzs27" path="res://scenes/ui/build_bar.tscn" id="22_buildbar"]
+[ext_resource type="PackedScene" uid="uid://k2typeinfopanel27" path="res://scenes/ui/type_info_panel.tscn" id="23_typeinfo"]
+[ext_resource type="PackedScene" uid="uid://k3unitinspector27" path="res://scenes/ui/unit_inspector.tscn" id="24_inspector"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
-size = Vector2(24, 24)
+size = Vector2(28, 28)
 
 [sub_resource type="StandardMaterial3D" id="Mat_ground"]
-albedo_color = Color(0.18, 0.22, 0.16, 1)
+albedo_color = Color(0.78, 0.68, 0.58, 1)
+albedo_texture = ExtResource("9_ground")
+uv1_scale = Vector3(5, 5, 1)
+roughness = 0.94
 
 [sub_resource type="BoxMesh" id="BoxMesh_wall"]
-size = Vector3(14, 2, 1)
+size = Vector3(11, 2, 1)
 
 [sub_resource type="StandardMaterial3D" id="Mat_wall"]
-albedo_color = Color(0.48, 0.42, 0.36, 1)
+albedo_color = Color(0.42, 0.34, 0.28, 1)
+roughness = 0.85
 
 [sub_resource type="BoxMesh" id="BoxMesh_spawn"]
 size = Vector3(0.6, 0.2, 0.6)
@@ -28,11 +48,40 @@ size = Vector3(0.6, 0.2, 0.6)
 albedo_color = Color(0.75, 0.22, 0.22, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_zone"]
-size = Vector3(12, 0.05, 3.5)
+size = Vector3(10, 0.05, 0.9)
 
 [sub_resource type="StandardMaterial3D" id="Mat_zone"]
 transparency = 1
-albedo_color = Color(0.25, 0.55, 0.9, 0.28)
+albedo_color = Color(0.35, 0.65, 0.95, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_approach"]
+size = Vector3(10, 0.04, 4.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_approach"]
+transparency = 1
+albedo_color = Color(0.55, 0.4, 0.2, 0.14)
+
+[sub_resource type="QuadMesh" id="QuadMesh_sky"]
+size = Vector2(40, 30)
+
+[sub_resource type="StandardMaterial3D" id="Mat_sky"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.92, 0.85, 1)
+albedo_texture = ExtResource("10_sky")
+texture_filter = 1
+
+[sub_resource type="Environment" id="Environment_battle"]
+background_mode = 1
+background_color = Color(0.16, 0.09, 0.06, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.62, 0.4, 0.28, 1)
+ambient_light_energy = 0.62
+fog_enabled = true
+fog_light_color = Color(0.55, 0.32, 0.18, 1)
+fog_density = 0.016
+fog_aerial_perspective = 0.22
+fog_sky_affect = 0.35
 
 [node name="Battle" type="Node3D"]
 script = ExtResource("1_battle")
@@ -41,29 +90,209 @@ zombie_runner_scene = ExtResource("6_runner")
 zombie_brute_scene = ExtResource("8_brute")
 turret_scene = ExtResource("4_turret")
 turret_cannon_scene = ExtResource("7_cannon")
-scrap_between_waves = 12
+support_scene = ExtResource("15_support")
+turret_tesla_scene = ExtResource("16_tesla")
+turret_sniper_scene = ExtResource("17_sniper")
+mine_scene = ExtResource("18_mine")
+barricade_scene = ExtResource("19_fence")
+start_scrap = 130
+scrap_between_waves = 15
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_battle")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 18, 14)
+transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 20.5, 14.5)
 current = true
-fov = 50.0
+fov = 60.0
+environment = SubResource("Environment_battle")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 4, 12, 2)
+light_color = Color(1, 0.78, 0.52, 1)
+light_energy = 1.28
 shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -3, 10, 4)
+light_color = Color(0.55, 0.62, 0.72, 1)
+light_energy = 0.28
+shadow_enabled = false
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_ground")
 surface_material_override/0 = SubResource("Mat_ground")
 
+[node name="SkyBackdrop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.0, -20)
+mesh = SubResource("QuadMesh_sky")
+surface_material_override/0 = SubResource("Mat_sky")
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="SkylineLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 3.8, -15.5)
+modulate = Color(0.52, 0.42, 0.36, 0.82)
+pixel_size = 0.0095
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("20_skyline")
+
+[node name="SkylineRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8, 3.5, -14.8)
+modulate = Color(0.48, 0.4, 0.34, 0.78)
+pixel_size = 0.0088
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("20_skyline")
+
+[node name="CarLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4, 1.55, -3.8)
+script = ExtResource("21_flicker")
+pixel_size = 0.0062
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("11_car")
+
+[node name="TruckRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.7, -0.8)
+script = ExtResource("21_flicker")
+speed = 3.2
+amplitude = 0.06
+pixel_size = 0.0066
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("12_truck")
+
+[node name="CarFarLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6, 1.35, -8.2)
+script = ExtResource("21_flicker")
+speed = 4.1
+amplitude = 0.055
+modulate = Color(0.92, 0.88, 0.84, 1)
+pixel_size = 0.0054
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("11_car")
+
+[node name="CarFarRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2, 1.4, -9.2)
+script = ExtResource("21_flicker")
+speed = 3.9
+amplitude = 0.05
+modulate = Color(0.9, 0.86, 0.82, 1)
+pixel_size = 0.0055
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("11_car")
+
+[node name="DebrisLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9, 0.95, 0.6)
+script = ExtResource("21_flicker")
+speed = 4.4
+amplitude = 0.09
+pixel_size = 0.0036
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("13_debris")
+
+[node name="DebrisRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8, 0.9, -5.2)
+script = ExtResource("21_flicker")
+speed = 4.8
+amplitude = 0.085
+pixel_size = 0.0034
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("13_debris")
+
+[node name="DebrisMidRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.0, 0.85, 1.8)
+script = ExtResource("21_flicker")
+speed = 3.7
+amplitude = 0.08
+pixel_size = 0.0032
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("13_debris")
+
+[node name="BarrierLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1, 1.05, 3.4)
+modulate = Color(0.95, 0.92, 0.88, 1)
+pixel_size = 0.0035
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("14_barrier")
+
+[node name="BarrierRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2, 1.05, 3.0)
+modulate = Color(0.93, 0.9, 0.86, 1)
+pixel_size = 0.0035
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("14_barrier")
+
+[node name="DebrisNearWallLeft" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 0.75, 5.5)
+script = ExtResource("21_flicker")
+speed = 5.0
+amplitude = 0.07
+pixel_size = 0.003
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("13_debris")
+
+[node name="DebrisNearWallRight" type="Sprite3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.72, 5.4)
+script = ExtResource("21_flicker")
+speed = 4.6
+amplitude = 0.065
+pixel_size = 0.0029
+billboard = 2
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+texture = ExtResource("13_debris")
+
 [node name="PlacementZone" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 3.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32, 5.75)
 mesh = SubResource("BoxMesh_zone")
 surface_material_override/0 = SubResource("Mat_zone")
+
+[node name="ApproachZone" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 2.9)
+mesh = SubResource("BoxMesh_approach")
+surface_material_override/0 = SubResource("Mat_approach")
 
 [node name="Wall" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
 script = ExtResource("2_wall")
+front_offset_z = -0.5
+rampart_y = 1.35
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
 mesh = SubResource("BoxMesh_wall")
@@ -82,140 +311,146 @@ script = ExtResource("5_wave")
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="PauseButton" type="Button" parent="HUD"]
-offset_left = 16.0
+offset_left = 12.0
 offset_top = 12.0
-offset_right = 156.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 28
+offset_right = 148.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 26
 text = "PAUSE"
 
 [node name="HpLabel" type="Label" parent="HUD"]
-offset_left = 172.0
+offset_left = 160.0
 offset_top = 12.0
-offset_right = 520.0
-offset_bottom = 56.0
-theme_override_font_sizes/font_size = 30
+offset_right = 460.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 26
 text = "Wall HP: 100 / 100"
 
 [node name="WaveLabel" type="Label" parent="HUD"]
-offset_left = 172.0
-offset_top = 56.0
-offset_right = 520.0
-offset_bottom = 100.0
-theme_override_font_sizes/font_size = 28
-text = "Wave 1/3"
-
-[node name="DifficultyLabel" type="Label" parent="HUD"]
-offset_left = 172.0
-offset_top = 100.0
-offset_right = 520.0
-offset_bottom = 136.0
-theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.78, 0.82, 0.72, 1)
-text = "Diff: Normal"
+offset_left = 160.0
+offset_top = 48.0
+offset_right = 460.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 24
+text = "Wave 1"
 
 [node name="ScrapLabel" type="Label" parent="HUD"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -280.0
+offset_left = -250.0
 offset_top = 12.0
-offset_right = -16.0
-offset_bottom = 56.0
+offset_right = -12.0
+offset_bottom = 48.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 32
-text = "Scrap: 100"
+theme_override_font_sizes/font_size = 26
+text = "Scrap: 130"
 horizontal_alignment = 2
 
 [node name="TurretsLabel" type="Label" parent="HUD"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -280.0
-offset_top = 56.0
-offset_right = -16.0
-offset_bottom = 100.0
+offset_left = -250.0
+offset_top = 48.0
+offset_right = -12.0
+offset_bottom = 84.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 28
-text = "Turrets: 0/3"
+theme_override_font_sizes/font_size = 24
+text = "Units: 0"
 horizontal_alignment = 2
 
 [node name="SelectedLabel" type="Label" parent="HUD"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -340.0
-offset_top = 100.0
-offset_right = -16.0
-offset_bottom = 144.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 26
-text = "Selected: Basic (50)"
-horizontal_alignment = 2
+offset_left = 12.0
+offset_top = 88.0
+offset_right = 708.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 18
+text = "Select a defense below · tap a placed unit to inspect"
+horizontal_alignment = 1
 
-[node name="TypeBar" type="HBoxContainer" parent="HUD"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -300.0
-offset_top = 152.0
-offset_right = 300.0
-offset_bottom = 240.0
-grow_horizontal = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="BtnBasic" type="Button" parent="HUD/TypeBar"]
-custom_minimum_size = Vector2(260, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 28
-disabled = true
-text = "BASIC · 50"
-
-[node name="BtnCannon" type="Button" parent="HUD/TypeBar"]
-custom_minimum_size = Vector2(260, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 28
-text = "CANNON · 90"
-
-[node name="ModeBar" type="HBoxContainer" parent="HUD"]
-anchors_preset = 7
-anchor_left = 0.5
+[node name="AbilityBar" type="VBoxContainer" parent="HUD"]
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -420.0
-offset_top = -120.0
-offset_right = 420.0
-offset_bottom = -24.0
-grow_horizontal = 2
+offset_left = 12.0
+offset_top = -484.0
+offset_right = 140.0
+offset_bottom = -252.0
 grow_vertical = 0
-theme_override_constants/separation = 16
-alignment = 1
+theme_override_constants/separation = 12
+alignment = 2
 
-[node name="BtnBuild" type="Button" parent="HUD/ModeBar"]
-custom_minimum_size = Vector2(240, 88)
+[node name="BtnRepair" type="Button" parent="HUD/AbilityBar"]
+custom_minimum_size = Vector2(128, 112)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
-disabled = true
-text = "BUILD"
+theme_override_font_sizes/font_size = 22
+text = "REPAIR
+×3"
 
-[node name="BtnUpgrade" type="Button" parent="HUD/ModeBar"]
-custom_minimum_size = Vector2(240, 88)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
-text = "UPGRADE"
+[node name="CdOverlay" type="ColorRect" parent="HUD/AbilityBar/BtnRepair"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.08, 0.12, 0.65)
 
-[node name="BtnSell" type="Button" parent="HUD/ModeBar"]
-custom_minimum_size = Vector2(240, 88)
+[node name="CdLabel" type="Label" parent="HUD/AbilityBar/BtnRepair"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+text = "30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnSlow" type="Button" parent="HUD/AbilityBar"]
+custom_minimum_size = Vector2(128, 112)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
-text = "SELL"
+theme_override_font_sizes/font_size = 22
+text = "SLOW"
+
+[node name="CdOverlay" type="ColorRect" parent="HUD/AbilityBar/BtnSlow"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.08, 0.12, 0.65)
+
+[node name="CdLabel" type="Label" parent="HUD/AbilityBar/BtnSlow"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+text = "30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuildBar" parent="HUD" instance=ExtResource("22_buildbar")]
+
+[node name="UnitInspector" parent="HUD" instance=ExtResource("24_inspector")]
+
+[node name="TypeInfoPanel" parent="HUD" instance=ExtResource("23_typeinfo")]
 
 [node name="ResultOverlay" type="Control" parent="HUD"]
 visible = false
@@ -244,10 +479,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -220.0
-offset_right = 220.0
-offset_bottom = 220.0
+offset_left = -300.0
+offset_top = -280.0
+offset_right = 300.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -255,30 +490,95 @@ alignment = 1
 
 [node name="ResultTitle" type="Label" parent="HUD/ResultOverlay/Center"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 48
 text = "VICTORY"
 horizontal_alignment = 1
 
 [node name="StarsLabel" type="Label" parent="HUD/ResultOverlay/Center"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 30
 theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
 text = "+0 Stars"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="HUD/ResultOverlay/Center"]
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(400, 88)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "RESTART"
 
 [node name="MenuButton" type="Button" parent="HUD/ResultOverlay/Center"]
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(400, 88)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "MAIN MENU"
+
+[node name="EndlessOverlay" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dim" type="ColorRect" parent="HUD/EndlessOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.02, 0.03, 0.05, 0.78)
+
+[node name="Center" type="VBoxContainer" parent="HUD/EndlessOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -320.0
+offset_right = 310.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/EndlessOverlay/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "VICTORY!"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="HUD/EndlessOverlay/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.82, 0.86, 0.78, 1)
+text = "Wave 5 cleared.
+Claim Stars now, or keep fighting in Endless?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ClaimButton" type="Button" parent="HUD/EndlessOverlay/Center"]
+custom_minimum_size = Vector2(440, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "CLAIM VICTORY"
+
+[node name="EndlessButton" type="Button" parent="HUD/EndlessOverlay/Center"]
+custom_minimum_size = Vector2(440, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "ENTER ENDLESS"
 
 [node name="PauseOverlay" type="Control" parent="HUD"]
 process_mode = 2
@@ -308,13 +608,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -250.0
-offset_right = 220.0
-offset_bottom = 250.0
+offset_left = -300.0
+offset_top = -400.0
+offset_right = 300.0
+offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="PauseTitle" type="Label" parent="HUD/PauseOverlay/Center"]
@@ -323,36 +623,36 @@ theme_override_font_sizes/font_size = 48
 text = "PAUSED"
 horizontal_alignment = 1
 
-[node name="DifficultyLabel" type="Label" parent="HUD/PauseOverlay/Center"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 26
-theme_override_colors/font_color = Color(0.78, 0.82, 0.72, 1)
-text = "Difficulty: Normal"
-horizontal_alignment = 1
-
 [node name="ResumeButton" type="Button" parent="HUD/PauseOverlay/Center"]
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(400, 88)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "RESUME"
 
 [node name="RestartButton" type="Button" parent="HUD/PauseOverlay/Center"]
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(400, 88)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "RESTART"
 
 [node name="MenuButton" type="Button" parent="HUD/PauseOverlay/Center"]
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(400, 88)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 32
 text = "MAIN MENU"
 
+[node name="RetireButton" type="Button" parent="HUD/PauseOverlay/Center"]
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "RETIRE (Stars)"
+
 [node name="MuteButton" type="Button" parent="HUD/PauseOverlay/Center"]
-custom_minimum_size = Vector2(360, 72)
+custom_minimum_size = Vector2(400, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 28

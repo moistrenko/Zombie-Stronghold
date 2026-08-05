@@ -1,0 +1,129 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/zombies/processed/zombie_runner_attack_6f.png" id="1_m7738"]
+[ext_resource type="Texture2D" path="res://assets/art/zombies/processed/zombie_runner_run_8f.png" id="2_n4246"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf407"]
+atlas = ExtResource("1_m7738")
+region = Rect2(0, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a84k8"]
+atlas = ExtResource("1_m7738")
+region = Rect2(256, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jukh4"]
+atlas = ExtResource("1_m7738")
+region = Rect2(512, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lefjf"]
+atlas = ExtResource("1_m7738")
+region = Rect2(768, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b66nl"]
+atlas = ExtResource("1_m7738")
+region = Rect2(1024, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdg4c"]
+atlas = ExtResource("1_m7738")
+region = Rect2(1280, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4f16"]
+atlas = ExtResource("2_n4246")
+region = Rect2(0, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayrx4"]
+atlas = ExtResource("2_n4246")
+region = Rect2(256, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3u0ip"]
+atlas = ExtResource("2_n4246")
+region = Rect2(512, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e64k8"]
+atlas = ExtResource("2_n4246")
+region = Rect2(768, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obw4i"]
+atlas = ExtResource("2_n4246")
+region = Rect2(1024, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15bfx"]
+atlas = ExtResource("2_n4246")
+region = Rect2(1280, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0uwj"]
+atlas = ExtResource("2_n4246")
+region = Rect2(1536, 0, 256, 341)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msns1"]
+atlas = ExtResource("2_n4246")
+region = Rect2(1792, 0, 256, 341)
+filter_clip = true
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf407")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a84k8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jukh4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lefjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b66nl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdg4c")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4f16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayrx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3u0ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e64k8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obw4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15bfx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0uwj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msns1")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 9.0
+}]

@@ -18,6 +18,6 @@ Playable цикл: волна → победа/поражение. Desktop + deb
 
 - [x] Sell + simple upgrade (in-run) — см. `docs/stage16.md`
 - [x] Meta progression между ранами (Stars + shop) — см. `docs/stage17.md`
-- [x] Difficulty select (Easy / Normal / Hard) — см. `docs/stage19.md`
+- [x] ~~Difficulty select~~ removed stage 27 (always Normal) — см. `docs/stage27.md`
 
 **Вне scope MVP slice:** мультиплеер, стор submit, IAP.

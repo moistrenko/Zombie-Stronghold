@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://j0barricadefence01"]
+
+[ext_resource type="Script" path="res://scripts/units/barricade.gd" id="1_barricade"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fence"]
+size = Vector3(2.6, 1.1, 0.35)
+
+[sub_resource type="StandardMaterial3D" id="Mat_fence"]
+albedo_color = Color(0.45, 0.38, 0.3, 1)
+roughness = 0.9
+
+[node name="Barricade" type="Node3D"]
+script = ExtResource("1_barricade")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("BoxMesh_fence")
+surface_material_override/0 = SubResource("Mat_fence")

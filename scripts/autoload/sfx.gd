@@ -5,7 +5,7 @@ extends Node
 const SAMPLE_RATE := 22050
 const POOL_SIZE := 8
 
-enum SfxId { PLACE, SHOOT, HIT, KILL, WALL_HIT, VICTORY, DEFEAT }
+enum SfxId { PLACE, SHOOT, HIT, KILL, WALL_HIT, VICTORY, DEFEAT, ABILITY_REPAIR, ABILITY_SLOW }
 
 var _streams: Dictionary = {}
 var _players: Array[AudioStreamPlayer] = []
@@ -22,6 +22,8 @@ func _ready() -> void:
 	_streams[SfxId.WALL_HIT] = _build_noise_burst(0.09, 0.32, 120.0, 60.0)
 	_streams[SfxId.VICTORY] = _build_arpeggio([523.25, 659.25, 783.99], 0.1, 0.22)
 	_streams[SfxId.DEFEAT] = _build_arpeggio([392.0, 311.13, 246.94], 0.14, 0.26)
+	_streams[SfxId.ABILITY_REPAIR] = _build_arpeggio([392.0, 523.25, 659.25], 0.07, 0.24)
+	_streams[SfxId.ABILITY_SLOW] = _build_blip(180.0, 0.16, 0.3, -10.0)
 
 	for i in POOL_SIZE:
 		var player := AudioStreamPlayer.new()
@@ -79,6 +81,14 @@ func play_victory() -> void:
 
 func play_defeat() -> void:
 	play(SfxId.DEFEAT, 1.0)
+
+
+func play_ability_repair() -> void:
+	play(SfxId.ABILITY_REPAIR, 2.0)
+
+
+func play_ability_slow() -> void:
+	play(SfxId.ABILITY_SLOW, 1.5)
 
 
 func _build_blip(freq: float, duration: float, amp: float, slide_semitones: float) -> AudioStreamWAV:

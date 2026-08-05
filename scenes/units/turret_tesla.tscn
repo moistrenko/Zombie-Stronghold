@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://g7turrettesla3d01"]
+
+[ext_resource type="Script" path="res://scripts/units/turret.gd" id="1_turret"]
+[ext_resource type="PackedScene" uid="uid://c3projectile3d01" path="res://scenes/units/projectile.tscn" id="2_projectile"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/turret_basic_frames.tres" id="3_frames"]
+
+[node name="TurretTesla" type="Node3D"]
+script = ExtResource("1_turret")
+attack_range = 9.0
+fire_interval = 0.9
+damage = 18
+projectile_scene = ExtResource("2_projectile")
+upgrade_cost = 45
+chain_jumps = 2
+chain_radius = 3.5
+chain_damage_mult = 0.7
+unit_kind = &"tesla"
+
+[node name="YawPivot" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="YawPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0.95, 0)
+modulate = Color(0.35, 0.85, 1, 1)
+pixel_size = 0.00235
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+sprite_frames = ExtResource("3_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Barrel" type="Marker3D" parent="YawPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, -0.85)

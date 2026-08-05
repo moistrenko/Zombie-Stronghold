@@ -1,0 +1,84 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/turrets/processed/turret_cannon_anim_6f.png" id="1_nb64j"]
+[ext_resource type="Texture2D" path="res://assets/art/turrets/processed/turret_cannon_idle.png" id="2_yx2ox"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1dra"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(0, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_savt2"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(256, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il16k"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(512, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf86a"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(768, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcxqv"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(1024, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l60u3"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(1280, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o16q6"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(0, 0, 256, 256)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8othu"]
+atlas = ExtResource("1_nb64j")
+region = Rect2(256, 0, 256, 256)
+filter_clip = true
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1dra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_savt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il16k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf86a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcxqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l60u3")
+}],
+"loop": 0,
+"name": &"fire",
+"speed": 17.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o16q6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8othu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yx2ox")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}]

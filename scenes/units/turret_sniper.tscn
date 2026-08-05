@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://h8turretsniper3d01"]
+
+[ext_resource type="Script" path="res://scripts/units/turret.gd" id="1_turret"]
+[ext_resource type="PackedScene" uid="uid://c3projectile3d01" path="res://scenes/units/projectile.tscn" id="2_projectile"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/turret_cannon_frames.tres" id="3_frames"]
+
+[node name="TurretSniper" type="Node3D"]
+script = ExtResource("1_turret")
+attack_range = 18.0
+fire_interval = 2.2
+damage = 70
+projectile_scene = ExtResource("2_projectile")
+upgrade_cost = 55
+unit_kind = &"sniper"
+
+[node name="YawPivot" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="YawPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 1.2, 0)
+modulate = Color(0.75, 0.45, 1, 1)
+pixel_size = 0.0027
+shaded = false
+alpha_cut = 1
+texture_filter = 1
+sprite_frames = ExtResource("3_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Barrel" type="Marker3D" parent="YawPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -1.2)

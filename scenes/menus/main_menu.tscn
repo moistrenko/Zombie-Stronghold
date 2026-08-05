@@ -1,6 +1,74 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8mainmenu01zs"]
+[gd_scene load_steps=10 format=3 uid="uid://c8mainmenu01zs"]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://scripts/ui/menu_bg_layers.gd" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://74pd0fcxvt46" path="res://assets/art/ui/processed/main_menu_bg_v1.png" id="3_bgtex"]
+[ext_resource type="Texture2D" uid="uid://bdxfmgitycgl8" path="res://assets/art/ui/processed/menu_zombies_layer_v1.png" id="4_ztex"]
+[ext_resource type="Texture2D" uid="uid://71vfxevhbkbi" path="res://assets/art/ui/processed/menu_cars_layer_v1.png" id="5_ctex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.05, 0.06, 0.08, 0.72)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.42, 0.22, 0.55)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+content_margin_left = 28.0
+content_margin_top = 28.0
+content_margin_right = 28.0
+content_margin_bottom = 28.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.12, 0.14, 0.12, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.58, 0.28, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.18, 0.2, 0.14, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.75, 0.35, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.08, 0.1, 0.08, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.45, 0.22, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,7 +79,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="BgLayers" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,29 +87,97 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.12, 0.14, 0.18, 1)
+clip_contents = true
+script = ExtResource("2_bg")
 
-[node name="Accent" type="ColorRect" parent="."]
+[node name="Bg" type="TextureRect" parent="BgLayers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 520.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.16, 0.2, 0.15, 1)
+texture = ExtResource("3_bgtex")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ZombiesLayer" type="TextureRect" parent="BgLayers"]
+modulate = Color(0.95, 0.95, 0.98, 0.92)
+layout_mode = 1
+anchors_preset = 15
+anchor_top = 0.22
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_ztex")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CarsLayer" type="TextureRect" parent="BgLayers"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -620.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("5_ctex")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Scrim" type="ColorRect" parent="BgLayers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.03, 0.04, 0.28)
 
 [node name="StarsLabel" type="Label" parent="."]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 280.0
+offset_right = 300.0
 offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.98, 0.88, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 28
-theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
 text = "Stars: 0"
 vertical_alignment = 1
+
+[node name="MuteButton" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.95, 0.95, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+text = "SOUND: ON"
 
 [node name="Center" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -51,98 +187,85 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -340.0
+offset_top = -380.0
 offset_right = 300.0
-offset_bottom = 340.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 18
 alignment = 1
 
 [node name="Title" type="Label" parent="Center"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.93, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0.05, 0.02, 0.0, 0.92)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.02, 0.95)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 52
 text = "Zombie Stronghold"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Subtitle" type="Label" parent="Center"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.88, 0.78, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.75, 0.78, 0.72, 1)
 text = "Hold the wall. Survive the waves."
 horizontal_alignment = 1
-
-[node name="DiffLabel" type="Label" parent="Center"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(0.7, 0.74, 0.68, 1)
-text = "Difficulty"
-horizontal_alignment = 1
-
-[node name="DiffBar" type="HBoxContainer" parent="Center"]
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-theme_override_constants/separation = 12
-alignment = 1
-
-[node name="BtnEasy" type="Button" parent="Center/DiffBar"]
-custom_minimum_size = Vector2(160, 72)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 26
-text = "EASY"
-
-[node name="BtnNormal" type="Button" parent="Center/DiffBar"]
-custom_minimum_size = Vector2(160, 72)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 26
-disabled = true
-text = "NORMAL"
-
-[node name="BtnHard" type="Button" parent="Center/DiffBar"]
-custom_minimum_size = Vector2(160, 72)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 26
-text = "HARD"
+autowrap_mode = 3
 
 [node name="Spacer" type="Control" parent="Center"]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="Center"]
-custom_minimum_size = Vector2(420, 96)
+[node name="MenuPanel" type="PanelContainer" parent="Center"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Buttons" type="VBoxContainer" parent="Center/MenuPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PlayButton" type="Button" parent="Center/MenuPanel/Buttons"]
+custom_minimum_size = Vector2(480, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.98, 0.95, 0.85, 1)
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 text = "PLAY"
 
-[node name="ShopButton" type="Button" parent="Center"]
-custom_minimum_size = Vector2(420, 80)
+[node name="ShopButton" type="Button" parent="Center/MenuPanel/Buttons"]
+custom_minimum_size = Vector2(480, 88)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.95, 0.92, 0.82, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 text = "META SHOP"
 
-[node name="HowToButton" type="Button" parent="Center"]
-custom_minimum_size = Vector2(420, 80)
+[node name="HowToButton" type="Button" parent="Center/MenuPanel/Buttons"]
+custom_minimum_size = Vector2(480, 88)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.95, 0.92, 0.82, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 text = "HOW TO PLAY"
-
-[node name="MuteButton" type="Button" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -220.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 80.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 24
-text = "SOUND: ON"
 
 [node name="HowToOverlay" type="Control" parent="."]
 visible = false
@@ -171,10 +294,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -360.0
-offset_top = -290.0
-offset_right = 360.0
-offset_bottom = 290.0
+offset_left = -320.0
+offset_top = -420.0
+offset_right = 320.0
+offset_bottom = 420.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -202,12 +325,15 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 22
-text = "• Pick Easy / Normal / Hard on the menu (saved for next launch).
-• Earn Scrap from kills; place turrets (max 3, or 4 with meta).
-• BUILD / UPGRADE / SELL modes on the battle HUD.
-• Survive 5 waves (Brute on 4–5) to win.
-• Earn Stars on win/lose; spend them in META SHOP.
-• Reset Meta in the shop clears Stars + upgrades (not difficulty)."
+text = "• Portrait-first: hold the phone upright.
+• Infinite waves — survive as long as you can; wall HP ≤ 0 = defeat.
+• Bottom bar: pick a defense (icon + price). Ghost follows; tap the zone to place.
+• Tap (i) on a type for stats. Tap a placed unit for Sell / Upgrade.
+• Turrets & Support on the fortress wall top; mines & fences on the approach path.
+• Zombies shuffle slowly, then chew the gate for 1 HP per hit.
+• REPAIR / SLOW abilities (left side) — cooldowns + Repair charges.
+• Pause → RETIRE to cash out Stars anytime; defeat also awards Stars by wave.
+• Spend Stars in META SHOP (Build Cost −10% replaces old max-turrets)."
 autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="HowToOverlay/Panel/VBox"]
@@ -244,10 +370,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -380.0
-offset_top = -320.0
-offset_right = 380.0
-offset_bottom = 320.0
+offset_left = -330.0
+offset_top = -520.0
+offset_right = 330.0
+offset_bottom = 520.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -305,7 +431,13 @@ text = "Turret Damage +5%"
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "+1 Max Turrets"
+text = "Build Cost −10%"
+
+[node name="BtnAbilityCd" type="Button" parent="ShopOverlay/Panel/VBox/Upgrades"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Ability CD −15%"
 
 [node name="ResetButton" type="Button" parent="ShopOverlay/Panel/VBox"]
 custom_minimum_size = Vector2(280, 56)
